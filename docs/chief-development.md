@@ -28,4 +28,7 @@ php artisan chief:db-refresh
 ```
 **Note that this will remove your existing database entries!**
 
+The following setup can be done the same as the install procedure. Follow the steps in this file and exclude the
+steps related to the database migrations and composer installment.
+
 // TODO: something about adding to semver, changelog...

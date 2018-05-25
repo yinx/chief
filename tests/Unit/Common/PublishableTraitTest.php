@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Users\User;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Common\Traits\Publishable;
+use Thinktomorrow\Chief\Common\Publishable\Publishable;
 
 /**
  * Class ValidationTraitDummyClass
@@ -16,7 +16,7 @@ use Thinktomorrow\Chief\Common\Traits\Publishable;
  */
 class PublishableTraitDummyClass extends Model
 {
-    use Publishable;
+    use Thinktomorrow\Chief\Common\Previewable\Publishable;
 
     public $published = false;
 
