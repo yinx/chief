@@ -47,14 +47,27 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public $table = "pages";
     protected $guarded = [];
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'start_at', 'end_at'];
     protected $with = ['translations'];
+
+    protected $period = false;
 
     public function __construct(array $attributes = [])
     {
         $this->translatedAttributes = array_merge($this->translatedAttributes, array_keys(static::translatableFields()));
 
         parent::__construct($attributes);
+    }
+
+    /**
+     * Does this page model makes usage of period start_at and end_at timings?
+     * This is handy for things as events, campaigns, actions and such.
+     *
+     * @return bool
+     */
+    public function hasPeriod(): bool
+    {
+        return $this->period;
     }
 
     /**
