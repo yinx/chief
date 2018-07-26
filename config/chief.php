@@ -64,6 +64,10 @@ return [
         // Modules
     ],
 
+    'forms' => [
+        'contact' => \Thinktomorrow\Chief\Forms\ContactForm::class,
+    ],
+
     /**
      * Set of mediatypes used for each collection.
      * Default set of mediatypes that is available for every collection
