@@ -29,7 +29,7 @@
                     <!-- internal type -->
                     <label class="block stack custom-indicators" for="typeInternal">
                         <input v-on:click="changeType('internal')" {{ (old('type', $menuitem->type) == 'internal') ? 'checked="checked"':'' }}
-                        name="type"
+                               name="type"
                                value="internal"
                                id="typeInternal"
                                type="radio">

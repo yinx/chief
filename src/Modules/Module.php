@@ -21,6 +21,7 @@ use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
 use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Forms\ChiefForm;
 
 class Module extends Model implements TranslatableContract, HasMedia, ActsAsChild, ActsAsCollection, PresentForParent
 {
@@ -33,20 +34,31 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
         PresentingForParent;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
-    protected $translationModel = ModuleTranslation::class;
+    protected $translationModel      = ModuleTranslation::class;
     protected $translationForeignKey = 'module_id';
-    protected $translatedAttributes = [
+    protected $translatedAttributes  = [
         'title', 'content'
     ];
 
-    public $table = "modules";
+    public    $table   = "modules";
     protected $guarded = [];
-    protected $dates = ['deleted_at'];
-    protected $with = ['translations'];
+    protected $dates   = ['deleted_at'];
+    protected $with    = ['translations'];
+    public    $form    = null;
+
 
     public function page()
     {
         return $this->belongsTo(Page::class, 'page_id');
+    }
+
+    public function form()
+    {
+        if($this->form){
+            return $this->form;
+        }
+
+        return null;
     }
 
     /**
@@ -105,7 +117,7 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     public static function defaultTranslatableFields(): array
     {
         return [
-            'title' => InputField::make()->label('titel'),
+            'title'   => InputField::make()->label('titel'),
             'content' => HtmlField::make()->label('Inhoud'),
         ];
     }

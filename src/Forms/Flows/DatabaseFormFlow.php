@@ -1,8 +1,24 @@
 <?php
 
-class DatabaseFormFlow{
+namespace Thinktomorrow\Chief\Flows;
+
+use Thinktomorrow\Chief\Forms\ChiefForm;
+use Illuminate\Http\Request;
+
+
+class DatabaseFormFlow extends Flow{
     
-    public function run(Form $model, Request $request) {
-        $fields = $model->fields();
+    public static function run(ChiefForm $model, Request $request) {
+        self::checkRequiredMethods($model);
+
+        $fields = $model->customFields();
+        dd($fields);
+        // SAVE DATA TO DB
+        
+    }
+
+    protected static function requiredMethods()
+    {
+        return [];
     }
 }

@@ -144,7 +144,7 @@ trait ActingAsCollection
         if ($this->collection) {
             return $this->collection;
         }
-
+        
         return CollectionKeys::fromConfig()
             ->filterByClass(static::class)
             ->toKey();

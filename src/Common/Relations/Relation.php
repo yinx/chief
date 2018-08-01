@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Common\Relations;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Pages\Page;
 
 class Relation extends Model
 {
@@ -90,9 +91,14 @@ class Relation extends Model
         foreach ($available_children_types as $type) {
             $collection = $collection->merge((new $type())->all());
         }
-
+        
         return $collection->reject(function($item) use($parent){
-            return $item->id == $parent->id;
+            if(is_a($item, Page::class))
+            {
+                return $item->id == $parent->id;
+            }
+
+            return false;
         });
     }
 }

@@ -10,6 +10,23 @@ All Notable changes to the `chief` application template will be documented in th
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## NEXT - 2018-08-01
+
+### Added
+- overflow removed from module panels so multiselect doesnt get hidden in the create module popup
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Updated module fetching for page so it only hides itself in the module selection dropdown
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## NEXT - 2018-07-27
 
 ### Added

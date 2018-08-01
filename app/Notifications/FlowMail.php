@@ -2,57 +2,33 @@
 
 namespace Thinktomorrow\Chief\App\Notifications;
 
-use Thinktomorrow\Chief\Users\Invites\Invitation;
+use Illuminate\Mail\Mailable;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Queue\SerializesModels;
 
-class FlowMail extends Notification implements ShouldQueue
+
+
+class FlowMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $data;
     public $view;
+    public $subject;
 
-    public function __construct($data, $view)
+    public function __construct($data, $view, $subject)
     {
-        $this->data = $data;
-        $this->view = $view;
+        $this->data    = $data;
+        $this->view    = $view;
+        $this->subject = $subject;
     }
 
-    public function via($notifiable)
+    public function build()
     {
-        return ['mail'];
-    }
-
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param  mixed $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
-    public function toMail($notifiable)
-    {
-        return (new MailMessage())
-            ->subject($this->data['subject'])
-            ->from(config('thinktomorrow.chief.contact.email'))
-            ->view($this->view, [
-                'data' => $this->data,
-            ]);
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
-        ];
+        return $this->subject($this->subject)
+                ->from(config('thinktomorrow.chief.contact.email'))
+                ->view($this->view, [
+                    'data' => $this->data,
+                ]);
     }
 }

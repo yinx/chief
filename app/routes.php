@@ -33,6 +33,7 @@ Route::get('invite/expired', 'Thinktomorrow\Chief\App\Http\Controllers\Back\User
 Route::get('invite/{token}/accept', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\InviteController@accept')->name('invite.accept')->middleware('web');
 Route::get('invite/{token}/deny', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\InviteController@deny')->name('invite.deny')->middleware('web');
 
+Route::post('form', 'Thinktomorrow\Chief\App\Http\Controllers\Back\FormController@store')->name('form.submit')->middleware('web');
 /**
  * -----------------------------------------------------------------
  * ADMIN ROUTES

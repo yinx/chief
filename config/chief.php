@@ -76,7 +76,7 @@ return [
 
         'default' => [
             (object) [
-                'type' => MediaType::HERO,
+                'type'  => MediaType::HERO,
                 'limit' => 1,
             ],
             (object) [

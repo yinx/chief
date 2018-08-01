@@ -6,9 +6,9 @@ namespace Thinktomorrow\Chief\Common\TranslatableFields;
 
 class FieldType
 {
-    const INPUT = 'input'; // oneliner text (input)
-    const TEXT = 'text'; // Plain text (textarea)
-    const HTML = 'html'; // Html text (wysiwyg)
+    const INPUT = 'input';  // oneliner text (input)
+    const TEXT  = 'text';   // Plain text (textarea)
+    const HTML  = 'html';   // Html text (wysiwyg)
 
     /**
      * @var string

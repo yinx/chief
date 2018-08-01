@@ -25,14 +25,34 @@ namespace Thinktomorrow\Chief\Forms;
 class ContactForm extends ChiefForm{
 
     public function customFields(){
-        return ['firstname', 'lastname', 'email', 'content'];
+        return ['firstname' => ['option1','option2','option3','option4'], 'lastname', 'email', 'content'];
     }
 
     public function validation(){
-        // return new ValidationData($rules, $messages, $attributes);
+        $rules      = [
+            'firstname' => 'required|in_array:'.implode(',',$this->customFields()['firstname']),
+            'lastname'  => 'required|max:100',
+            'email'     => 'required|email',
+            'content'   => 'required|min:10',
+        ];
+        $messages   = [
+            'firstname.required' => 'you retard you need a firstname :attribute',
+            'lastname.required'  => '',
+            'email.required'     => '',
+            'email.email'        => '',
+            'content.required'   => '',
+        ];
+        $attributes = [
+            'firstname' => 'voornaam',
+            'lastname'  => 'achternaam',
+            'email'     => 'email',
+            'content'   => 'inhoud',
+        ];
+
+        return new ValidationData($rules, $messages, $attributes);
     }
 
-    // OPtions are: mail, mailchimp, database, notifications
+    // Options are: mail, mailchimp, database, notifications
     public function flow()
     {
         return ['mail', 'database'];
@@ -40,11 +60,15 @@ class ContactForm extends ChiefForm{
 
     public function recipients()
     {
-        return config('admin');
+        return ['email' => config('thinktomorrow.chief.contact.email')];
     }
 
-    public function data()
+    public function subject(){
+        return "contact mail";
+    }
+
+    public function view()
     {
-        return [];
+        return "back.mails.contact";
     }
 }

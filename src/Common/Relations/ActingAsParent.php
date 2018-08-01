@@ -65,7 +65,7 @@ trait ActingAsParent
                 // Set the current pages collection to the current collection type
                 if($collected_pages_type == null || $collected_pages_type != $child->collectionKey()) {
                     $collected_pages_type = $child->collectionKey();
-                    $collected_pages_key = $key;
+                    $collected_pages_key  = $key;
                 }
 
                 if(!isset($grouped_children[$collected_pages_key])) {

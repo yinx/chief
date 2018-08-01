@@ -15,15 +15,12 @@
     @endcomponent
 
     @section('content')
-
         <form id="updateForm" method="POST" action="{{ route('chief.back.menu.update', $menuitem->id) }}" enctype="multipart/form-data" role="form">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
 
             @include('chief::back.menu._form')
-
         </form>
-
     @stop
 
 @push('custom-components')

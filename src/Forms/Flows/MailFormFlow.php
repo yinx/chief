@@ -1,29 +1,27 @@
 <?php
 
-class MailFlow{
+namespace Thinktomorrow\Chief\Flows;
 
-    public function run(Form $model, Request $request) {
-        if(!method_exists($model, 'recipients'))
-        {
-            throw new \Exception('Form needs to implement the recipients method when defining the mail flow');
-        }
+use Thinktomorrow\Chief\Forms\ChiefForm;
+use Illuminate\Http\Request;
+use Thinktomorrow\Chief\App\Notifications\FlowMail;
+use Illuminate\Support\Facades\Mail;
 
-        if(!method_exists($model, 'view'))
-        {
-            throw new \Exception('Form needs to implement the view method when defining the mail flow');
-        }
 
-        if(!method_exists($model, 'data'))
-        {
-            throw new \Exception('Form needs to implement the data method when defining the mail flow');
-        }
+class MailFormFlow extends Flow{
+
+    public static function run(ChiefForm $model, Request $request) {
+        self::checkRequiredMethods($model);
 
         $recipients = $model->recipients();
-        $view       = $model->view();
-        $data       = $model->data();
+        $view       = 'chief::'.$model->view();
+        $subject    = $model->subject();
 
-        (new FlowMail($data, $this->view))->toMail($this->recipients);
+        Mail::to($recipients)->queue(new FlowMail($request->all(), $view, $subject));
     }
 
-    
+    protected static function requiredMethods()
+    {
+        return ['recipients', 'view', 'subject'];
+    }
 }

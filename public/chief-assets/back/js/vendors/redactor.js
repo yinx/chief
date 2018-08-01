@@ -17849,10 +17849,10 @@ $R.add('module', 'list', {
             var columns = [];
 
             sections.forEach(function(section){
-                columns.push('<td class="column-'+ section +'"></td>');
+                columns.push('<td class="column-'+ section +'" contenteditable="true"></td>');
             });
-
-            this.app.insertion.insertHtml('<br><table class="block"><tbody class="block"><tr class="row gutter">' + columns.join('') + '</tr></tbody></table><br><br>');
+            this.app.insertion.insertRaw('<figure class="redactor-component" data-redactor-type="table" contenteditable="false" tabindex="-1"><table class="block"><tbody class="block"><tr class="row gutter">' + columns.join('') + '</tr></tbody></table></figure>');
+            
         },
 
         // set: function(sections){
