@@ -10,12 +10,12 @@ class FormController extends Controller{
 
     public function store(Request $request)
     {
-        $model = ChiefForm::guessModel($request);
+        $model = ChiefForm::guessModel($request->all());
 
         // Form model ophalen
-        $model->validation()->validate($request);
+        $model->validation()->validate($request->all());
 
-        $model->handleFlow($request);
+        $model->handleFlow($request->all());
 
         return redirect()->back();
     }

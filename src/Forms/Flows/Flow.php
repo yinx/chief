@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Flows;
+namespace Thinktomorrow\Chief\Forms\Flows;
 
 use Thinktomorrow\Chief\Forms\ChiefForm;
 use Illuminate\Http\Request;

@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Forms;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FormEntries extends Model  {
+class FormEntry extends Model  {
 
     public $table = "form_entries";
 

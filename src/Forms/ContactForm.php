@@ -25,12 +25,12 @@ namespace Thinktomorrow\Chief\Forms;
 class ContactForm extends ChiefForm{
 
     public function customFields(){
-        return ['firstname' => ['option1','option2','option3','option4'], 'lastname', 'email', 'content'];
+        return ['firstname', 'lastname', 'email', 'content'];
     }
 
     public function validation(){
         $rules      = [
-            'firstname' => 'required|in_array:'.implode(',',$this->customFields()['firstname']),
+            'firstname' => 'required|in_array:option1,option2,option3,option4',
             'lastname'  => 'required|max:100',
             'email'     => 'required|email',
             'content'   => 'required|min:10',

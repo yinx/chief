@@ -18,17 +18,15 @@ class ChiefForm extends Model {
         parent::__construct($attributes);
     }
 
-    public static function guessModel(Request $request)
+    public static function guessModel($request)
     {
-        $type = $request->get('formtype');
+        $type = $request['formtype'];
 
         if(!$type){
-            throw new \DomainException('No form type can not be empty/NULL');
+            throw new \DomainException('Form type can not be empty/NULL');
         }
 
-        $class = new $type;
-        
-        if(!$class){
+        if(!$class = new $type){
             throw new \DomainException('No form type could be determined for ' . $type);
         }
         
@@ -49,8 +47,13 @@ class ChiefForm extends Model {
     {
         foreach($this->flows as $flow)
         {
-            $class = 'Thinktomorrow\Chief\Flows\\'.ucfirst($flow).'FormFlow';
+            $class = 'Thinktomorrow\Chief\Forms\Flows\\'.ucfirst($flow).'FormFlow';
             (new $class)->run($this, $request);
         }
+    }
+
+    public function entries()
+    {
+        return $this->belongsToMany(FormEntry::class);
     }
 }
