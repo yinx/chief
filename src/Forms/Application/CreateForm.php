@@ -21,6 +21,7 @@ class CreateForm
 
             $class = $data['formtype'];
             unset($data['formtype']);
+            unset($data['_token']);
 
             $form       = new ChiefForm();
             $form->type = $class;

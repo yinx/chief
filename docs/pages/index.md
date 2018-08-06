@@ -28,24 +28,31 @@ We recommend creating a PageController to manage the different page endpoints. H
 ```php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Thinktomorrow\Chief\Pages\Page;
-use App\Http\Controllers\Controller;
 
-class PageController extends Controller
+class PagesController extends Controller
 {
-    public function index()
+    public function show($slug)
     {
-        return view('pages.index', [
-            'pages' => Page::all()
-        ]);
+        if(!$page = Page::findPublishedBySlug($slug)) {
+            throw new NotFoundHttpException('No published page found by slug ['.$slug.']');
+        }
+
+        // TODO: If slug matches the homepage page, redirect to root to avoid duplicate content
+        if($page->isHomepage()) {
+            return redirect()->route('pages.home');
+        }
+
+        return $page->view();
     }
 
-    public function show(Request $request)
+    public function homepage()
     {
-        return view('pages.index', [
-            'page' => Page::findBySlug($request->slug)
-        ]);
+        // Get the page that has the flag 'is_homepage'. Otherwise we take the first singles pages found. If not found, we take the first published page...
+        $page = Page::guessHomepage();
+
+        return $page->view();
     }
 }
 ```
@@ -56,10 +63,10 @@ Create the necessary routes for each endpoint. By default, we assume the page ro
 ## Adding a new page
 - create a new model and extend from the Page model like so:
 
+## Building the page
+Defining the layout for a page is quite simple. We use a very basic type of pagebuilder which allows you to add textfields which can contain images/columns/link/button/etc.
+You can also add modules in between text sections. For a more detailed explanation about modules look  [here](../modules/index.md)
 
-## Setting custom fields
-We can use squanto fields to include a way to manage static content. Squanto is the package that deals with static text management of the site.
-The way you can aim these translations to a specific
 
 ## Page API
 #### Page::all()

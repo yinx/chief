@@ -15,7 +15,7 @@ class CreateFormsTable extends Migration
     {
         Schema::create('forms', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('type', 32)->index();
+            $table->string('type')->index();
             $table->timestamps();
         });
 
