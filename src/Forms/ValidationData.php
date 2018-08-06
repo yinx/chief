@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Forms;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
- 
+
 class ValidationData{
 
     private $rules      = [];
@@ -19,9 +19,9 @@ class ValidationData{
         $this->attributes = $attributes;
     }
 
-    public function validate(Request $request)
+    public function validate($data)
     {
-        Validator::make($request->all(), $this->rules, $this->messages, $this->attributes)->validate();
+        Validator::make($data, $this->rules, $this->messages, $this->attributes)->validate();
     }
 
 }

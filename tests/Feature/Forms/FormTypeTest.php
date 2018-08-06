@@ -30,8 +30,5 @@ class FormTypeTest extends TestCase
         factory(ChiefForm::class)->create(['type' => null]);
     }
 
-}
 
-class OtherFormFake extends ChiefForm
-{
 }

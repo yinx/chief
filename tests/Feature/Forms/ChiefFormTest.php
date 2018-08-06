@@ -40,8 +40,16 @@ class ChiefFormTest extends TestCase
 
         $model = ChiefForm::guessModel($request);
     }
-}
 
-class OtherFormFake extends ChiefForm
-{
+    /** @test */
+    public function it_can_define_validation()
+    {
+        $this->setUpDefaultAuthorization();
+
+        $request = ['formtype' => ContactForm::class];
+
+        $response = $this->asAdmin()->post('/form', $request);
+
+        $response->assertSessionHasErrors();
+    }
 }

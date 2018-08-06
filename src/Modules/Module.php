@@ -52,15 +52,6 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
         return $this->belongsTo(Page::class, 'page_id');
     }
 
-    public function form()
-    {
-        if($this->form){
-            return $this->form;
-        }
-
-        return null;
-    }
-
     /**
      * The page specific ones are the text modules
      * which are added via the page builder
