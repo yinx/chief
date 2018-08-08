@@ -6434,11 +6434,11 @@ select {
 }
 
 .\--remove-padding {
-  padding: 0;
+  padding: 0 !important;
 }
 
 .\--remove-margin {
-  margin: 0;
+  margin: 0 !important;
 }
 
 .\--raised, .alert:hover, .nav-pills-primary li:hover,
@@ -6489,8 +6489,8 @@ select {
   cursor: pointer;
 }
 
-.h-screen {
-  height: 100vh;
+.min-h-screen {
+  min-height: 100vh;
 }
 
 .fade-enter-active, .fade-leave-active {

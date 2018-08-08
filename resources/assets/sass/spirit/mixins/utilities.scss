@@ -18,8 +18,8 @@
   width: auto;
 }
 
-.--remove-padding{ padding: 0; }
-.--remove-margin{ margin: 0; }
+.--remove-padding{ padding: 0!important; }
+.--remove-margin{ margin: 0!important; }
 
 // GOOGLE MATERIAL EFFECT
 .--raised {
@@ -67,6 +67,6 @@
   cursor: pointer;
 }
 
-.h-screen{
-  height: 100vh;
+.min-h-screen{
+  min-height: 100vh;
 }
