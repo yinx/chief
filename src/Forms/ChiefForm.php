@@ -54,6 +54,13 @@ class ChiefForm extends Model {
 
     public function entries()
     {
-        return $this->belongsToMany(FormEntry::class);
+        return $this->hasMany(FormEntry::class, 'form_id');
+    }
+
+    public function getClassTypeAttribute()
+    {
+        strtok($this->type, '\\');
+        strtok('\\');
+        return strtok('');
     }
 }

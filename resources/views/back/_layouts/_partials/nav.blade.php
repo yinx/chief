@@ -6,6 +6,9 @@
                     <a class="nav-item icon icon-feather" href="{{ route('chief.back.dashboard') }}"></a>
                 </li>
                 <li>
+                    <a class="nav-item {{ isActiveUrl('admin/forms*') ? 'active' : '' }}" href="{{ route('chief.back.forms.index') }}">Forms/Campaigns</a>
+                </li>
+                <li>
                     <dropdown>
                         <span class="center-y nav-item {{ isActiveUrl('admin/pages*') ? 'active' : '' }}" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle">Pagina's</span>
                         <div v-cloak class="dropdown-box inset-s">

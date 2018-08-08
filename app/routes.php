@@ -87,6 +87,11 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     Route::delete('menu/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MenuController@destroy')->name('chief.back.menu.destroy');
     Route::get('menu/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MenuController@edit')->name('chief.back.menu.edit');
 
+    // FORMS
+    Route::get('form', 'Thinktomorrow\Chief\App\Http\Controllers\Back\FormController@index')->name('chief.back.forms.index');
+    Route::get('form/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\FormController@show')->name('chief.back.forms.show');
+
+
     Route::get('/settings', ['as' => 'chief.back.settings.index','uses' => Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController::class.'@show']);
 
     /**

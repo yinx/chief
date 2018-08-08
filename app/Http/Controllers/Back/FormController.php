@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 
 class FormController extends Controller{
 
+    public function index()
+    {
+        // REACTIVATE THIS WHEN PUSHING
+        // $this->authorize('view-forms');
+
+        $forms = ChiefForm::with('entries')->get();
+
+        return view('chief::back.forms.index', compact('forms'));
+    }
+
     public function store(Request $request)
     {
         $model = ChiefForm::guessModel($request->all());
@@ -18,5 +28,12 @@ class FormController extends Controller{
         $model->handleFlow($request->all());
 
         return redirect()->back();
+    }
+
+    public function show($id)
+    {
+        $form = ChiefForm::find($id);
+
+        return view('chief::back.forms.show', compact('form'));
     }
 }

@@ -23,10 +23,12 @@ class CreateForm
             unset($data['formtype']);
             unset($data['_token']);
 
-            $form       = new ChiefForm();
-            $form->type = $class;
-            $form->save();
-
+            $form = ChiefForm::where('type', $class)->first();
+            if(!$form){
+                $form       = new ChiefForm();
+                $form->type = $class;
+                $form->save();
+            }
 
             // create entries.
             $entry          = new FormEntry;
