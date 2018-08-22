@@ -23,6 +23,7 @@ use Thinktomorrow\Chief\Common\Audit\AuditTrait;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Thinktomorrow\Chief\Common\Publish\Publishable;
 use Thinktomorrow\Chief\Modules\Module;
+use Illuminate\Support\Carbon;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, ActsAsCollection
 {
@@ -299,26 +300,26 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
      */
     public function isPublished()
     {
-        return (!!$this->published && is_null($this->archived_at));
+        return ($this->published_at != null && Carbon::now()->gt($this->published_at) && is_null($this->archived_at));
     }
 
     public function isDraft()
     {
-        return (!$this->published && is_null($this->archived_at));
+        return ($this->published_at == null || Carbon::now()->lt($this->published_at) && is_null($this->archived_at));
     }
 
     public function publish()
     {
-        $this->published = 1;
-        $this->archived_at = null;
+        $this->published_at = Carbon::now();
+        $this->archived_at  = null;
 
         $this->save();
     }
 
     public function draft()
     {
-        $this->published = 0;
-        $this->archived_at = null;
+        $this->published_at = null;
+        $this->archived_at  = null;
 
         $this->save();
     }

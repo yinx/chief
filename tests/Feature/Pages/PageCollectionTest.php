@@ -6,6 +6,7 @@ use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Illuminate\Support\Carbon;
 
 class PageCollectionTest extends TestCase
 {
@@ -104,16 +105,16 @@ class PageCollectionTest extends TestCase
     public function it_can_find_collection_published_by_slug()
     {
         ArticlePageFake::create([
-            'collection' => 'articles',
-            'title:nl' => 'title',
-            'slug:nl' => 'foobar',
-            'published' => 1
+            'collection'   => 'articles',
+            'title:nl'     => 'title',
+            'slug:nl'      => 'foobar',
+            'published_at' => Carbon::now()->subDay()
         ]);
         ArticlePageFake::create([
-            'collection' => 'articles',
-            'title:nl' => 'title',
-            'slug:nl' => 'barfoo',
-            'published' => 0
+            'collection'   => 'articles',
+            'title:nl'     => 'title',
+            'slug:nl'      => 'barfoo',
+            'published_at' => null
         ]);
 
         $this->assertNotNull(ArticlePageFake::findPublishedBySlug('foobar'));
@@ -124,10 +125,10 @@ class PageCollectionTest extends TestCase
     public function it_returns_the_right_collection_with_the_eloquent_find_methods()
     {
         $article = ArticlePageFake::create([
-            'collection' => 'articles',
-            'title:nl' => 'title',
-            'slug:nl' => 'foobar',
-            'published' => 1
+            'collection'   => 'articles',
+            'title:nl'     => 'title',
+            'slug:nl'      => 'foobar',
+            'published_at' => Carbon::now()->subDay()
         ]);
 
         $this->assertInstanceOf(ArticlePageFake::class, Page::find($article->id));
@@ -140,10 +141,10 @@ class PageCollectionTest extends TestCase
         $this->disableExceptionHandling();
 
         ArticlePageFake::create([
-            'collection' => 'articles',
-            'title:nl' => 'title',
-            'slug:nl' => 'foobar',
-            'published' => 1
+            'collection'   => 'articles',
+            'title:nl'     => 'title',
+            'slug:nl'      => 'foobar',
+            'published_at' => Carbon::now()->subDay()
         ]);
 
         $this->assertInstanceOf(ArticlePageFake::class, Page::findBySlug('foobar'));

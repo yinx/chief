@@ -11,6 +11,7 @@ use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Illuminate\Support\Carbon;
 
 class PageBuildTest extends TestCase
 {
@@ -53,7 +54,7 @@ class PageBuildTest extends TestCase
     public function it_can_fetch_all_sections_in_order()
     {
         $module    = TextModule::create(['collection' => 'text', 'slug' => 'eerste-text', 'content:nl' => 'eerste text']);
-        $otherPage = ArticlePageFake::create(['collection' => 'articles', 'title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug', 'published' => true]);
+        $otherPage = ArticlePageFake::create(['collection' => 'articles', 'title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug', 'published_at' => Carbon::now()->subDay()]);
         $module2   = TextModule::create(['collection' => 'text', 'slug' => 'tweede-text', 'content:nl' => 'tweede text']);
         $module3   = NewsletterModuleFake::create(['collection' => 'newsletter', 'slug' => 'newsletter', 'content:nl' => 'nieuwsbrief']);
 

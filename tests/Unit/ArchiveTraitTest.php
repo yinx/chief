@@ -69,11 +69,11 @@ class ArchivableTest extends TestCase
     /** @test */
     public function it_works_as_expected_alongside_publishable()
     {
-        factory(Page::class)->create(['archived_at' => Carbon::now(), 'published' => 1]);
-        factory(Page::class)->create(['archived_at' => null, 'published' => 1]);
-        factory(Page::class)->create(['archived_at' => null, 'published' => 0]);
-        factory(Page::class)->create(['archived_at' => null, 'published' => 0]);
-        factory(Page::class)->create(['archived_at' => Carbon::now(), 'published' => 0]);
+        factory(Page::class)->create(['archived_at' => Carbon::now(), 'published_at' => Carbon::now()->subDay()]);
+        factory(Page::class)->create(['archived_at' => null, 'published_at' => Carbon::now()->subDay()]);
+        factory(Page::class)->create(['archived_at' => null, 'published_at' => null]);
+        factory(Page::class)->create(['archived_at' => null, 'published_at' => null]);
+        factory(Page::class)->create(['archived_at' => Carbon::now(), 'published_at' => null]);
 
         $this->assertCount(2, Page::archived()->get());
         $this->assertCount(3, Page::get());

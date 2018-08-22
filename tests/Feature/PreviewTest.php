@@ -13,7 +13,7 @@ class PreviewTest extends TestCase
         $this->disableExceptionHandling();
 
         $originalpage = factory(Page::class)->create([
-            'published' => 0
+            'published_at' => null
         ]);
 
         $response = $this->asAdminWithoutRole()->get(route('demo.pages.show', $originalpage->slug) . '?preview-mode');
@@ -31,7 +31,7 @@ class PreviewTest extends TestCase
     public function a_user_can_not_view_previews_of_draft_pages()
     {
         $originalpage = factory(Page::class)->create([
-            'published' => 0
+            'published_at' => null
         ]);
 
         $response = $this->get(route('demo.pages.show', $originalpage->slug) . '?preview-mode');

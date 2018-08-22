@@ -73,7 +73,7 @@ class AuditTest extends TestCase
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams(['published' => false]));
+            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams(['published_at' => null]));
         
         $page = Page::first();
 
@@ -93,7 +93,7 @@ class AuditTest extends TestCase
     {
         $user = $this->developer();
 
-        $page = factory(Page::class)->create(['published' => true])->first();
+        $page = factory(Page::class)->create(['published_at' => Carbon::now()->subDay()])->first();
 
         $this->actingAs($user, 'chief')
              ->put(route('chief.back.pages.archive', $page->id));

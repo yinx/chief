@@ -21,7 +21,7 @@ class UpdatePage
         try {
             DB::beginTransaction();
 
-            $page           = Page::findOrFail($id);
+            $page   = Page::findOrFail($id);
 
             $this->savePageTranslations($page, $translations);
 

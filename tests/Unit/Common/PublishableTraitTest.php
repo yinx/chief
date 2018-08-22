@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Common\Publish\Publishable;
+use Illuminate\Support\Carbon;
 
 /**
  * Class ValidationTraitDummyClass
@@ -16,7 +17,7 @@ class PublishableTraitDummyClass extends Model
 {
     use Publishable;
 
-    public $published = false;
+    public $published = null;
 
     public function save(array $options = [])
     {
@@ -77,9 +78,9 @@ class PublishableTest extends TestCase
     /** @test */
     public function it_can_get_all_the_published_models()
     {
-        factory(Page::class)->create(['published' => 1]);
-        factory(Page::class)->create(['published' => 0]);
-        factory(Page::class)->create(['published' => 1]);
+        factory(Page::class)->create(['published_at' => Carbon::now()->subDay()]);
+        factory(Page::class)->create(['published_at' => null]);
+        factory(Page::class)->create(['published_at' => Carbon::now()->subDay()]);
 
         $this->assertCount(2, Page::getAllPublished());
     }
@@ -87,9 +88,9 @@ class PublishableTest extends TestCase
     /** @test */
     public function it_can_get_pages_sorted_by_published()
     {
-        factory(Page::class)->create(['published' => 1]);
-        factory(Page::class)->create(['published' => 0]);
-        factory(Page::class)->create(['published' => 1]);
+        factory(Page::class)->create(['published_at' => Carbon::now()->subDay()]);
+        factory(Page::class)->create(['published_at' => Carbon::now()->addDay()]);
+        factory(Page::class)->create(['published_at' => Carbon::now()->subDay()]);
 
         $this->assertTrue(Page::sortedByPublished()->first()->isPublished());
         $this->assertFalse(Page::sortedByPublished()->get()->last()->isPublished());

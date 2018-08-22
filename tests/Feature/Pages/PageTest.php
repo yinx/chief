@@ -13,7 +13,7 @@ class PageTest extends TestCase
 
     public function setUp()
     {
-        parent::setUp();
+        parent:: setUp();
 
         $this->setUpDatabase();
     }
@@ -22,8 +22,8 @@ class PageTest extends TestCase
     public function it_can_find_by_slug()
     {
         $page = factory(Page::class)->create([
-            'slug'      => 'foobar',
-            'published' => 0
+            'slug'         => 'foobar',
+            'published_at' => null
         ]);
 
         $this->assertEquals($page->id, Page::findBySlug('foobar')->id);
@@ -33,12 +33,12 @@ class PageTest extends TestCase
     public function it_can_find_published_by_slug()
     {
         factory(Page::class)->create([
-            'slug' => 'foobar',
-            'published' => 1
+            'slug'         => 'foobar',
+            'published_at' => Carbon::now()->subDay()
         ]);
         factory(Page::class)->create([
-            'slug' => 'barfoo',
-            'published' => 0
+            'slug'         => 'barfoo',
+            'published_at' => null
         ]);
 
         $this->assertNotNull(Page::findPublishedBySlug('foobar'));
@@ -49,12 +49,12 @@ class PageTest extends TestCase
     public function it_can_find_sorted_by_recent()
     {
         factory(Page::class)->create([
-            'published'     => 0,
-            'created_at'    => Carbon::now()->subDays(3)
+            'published_at' => null,
+            'created_at'   => Carbon::now()->subDays(3)
         ]);
         factory(Page::class)->create([
-            'published'     => 0,
-            'created_at'    => Carbon::now()->subDays(1)
+            'published_at' => null,
+            'created_at'   => Carbon::now()->subDays(1)
         ]);
 
         $pages = Page::sortedByCreated()->get();

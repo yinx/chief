@@ -2,16 +2,19 @@
 
 namespace Thinktomorrow\Chief\Common\Publish;
 
+use Illuminate\Support\Carbon;
+
+
 trait Publishable
 {
     public function isPublished()
     {
-        return (!!$this->published);
+        return $this->published_at != null && Carbon::now()->gt($this->published_at);
     }
 
     public function isDraft()
     {
-        return (!$this->published);
+        return $this->published_at == null || Carbon::now()->lt($this->published_at) ;
     }
 
     public function scopePublished($query)
@@ -21,23 +24,23 @@ trait Publishable
             return;
         }
 
-        $query->where('published', 1);
+        $query->whereDate('published_at',  '<',  Carbon::now());
     }
 
     public function scopeDrafted($query)
     {
-        $query->where('published', 0);
+        $query->whereDate('published_at',  '>',  Carbon::now())->orWhere('published_at', null);
     }
 
     public function publish()
     {
-        $this->published = 1;
+        $this->published_at = Carbon::now();
         $this->save();
     }
 
     public function draft()
     {
-        $this->published = 0;
+        $this->published_at = null;
         $this->save();
     }
 
@@ -48,6 +51,6 @@ trait Publishable
 
     public function scopeSortedByPublished($query)
     {
-        return $query->orderBy('published', 'DESC');
+        return $query->orderBy('published_at', 'ASC');
     }
 }

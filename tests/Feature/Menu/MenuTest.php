@@ -56,8 +56,8 @@ class MenuTest extends TestCase
     public function it_can_reference_an_internal_page()
     {
         $page   = factory(Page::class)->create([
-            'slug'      => 'foobar',
-            'published' => 1
+            'slug'         => 'foobar',
+            'published_at' => Carbon::now()->subDay()
         ]);
 
         $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'internal']);
@@ -71,8 +71,8 @@ class MenuTest extends TestCase
     public function it_can_be_a_custom_link()
     {
         $page   = factory(Page::class, 3)->create([
-            'collection'    => 'articles',
-            'published'     => 1
+            'collection'   => 'articles',
+            'published_at' => Carbon::now()->subDay()
         ]);
 
         $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'internal']);
@@ -97,8 +97,8 @@ class MenuTest extends TestCase
     public function it_can_reference_a_collection_of_pages()
     {
         factory(Page::class, 3)->create([
-            'collection'    => 'articles',
-            'published'     => 1
+            'collection'   => 'articles',
+            'published_at' => Carbon::now()->subDay()
         ]);
 
         // Sanity check
@@ -129,14 +129,14 @@ class MenuTest extends TestCase
     public function it_can_be_rendered_with_a_generic_api()
     {
         $page = factory(Page::class)->create([
-            'collection' => 'singles',
-            'slug'      => 'foobar',
-            'published' => 1
+            'collection'   => 'singles',
+            'slug'         => 'foobar',
+            'published_at' => Carbon::now()->subDay()
         ]);
 
         factory(Page::class, 3)->create([
-            'collection'    => 'articles',
-            'published'     => 1
+            'collection'   => 'articles',
+            'published_at' => Carbon::now()->subDay()
         ]);
 
         MenuItem::create(['type' => 'internal', 'label:nl' => 'first item', 'page_id' => $page->id]);
@@ -240,12 +240,12 @@ class MenuTest extends TestCase
         $this->setUpDefaultAuthorization();
 
         factory(Page::class)->create([
-            'published'     => 0,
-            'created_at'    => Carbon::now()->subDays(3)
+            'published_at' => null,
+            'created_at'   => Carbon::now()->subDays(3)
         ]);
         factory(Page::class)->create([
-            'published'     => 1,
-            'created_at'    => Carbon::now()->subDays(1)
+            'published_at' => Carbon::now()->subDay(),
+            'created_at'   => Carbon::now()->subDays(1)
         ]);
 
         $response = $this->asAdmin()
@@ -262,8 +262,8 @@ class MenuTest extends TestCase
     public function it_can_get_menu_by_type()
     {
         $page   = factory(Page::class)->create([
-            'slug'      => 'foobar',
-            'published' => 1
+            'slug'         => 'foobar',
+            'published_at' => Carbon::now()->subDay()
         ]);
 
         $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'internal', 'menu_type' => 'main']);

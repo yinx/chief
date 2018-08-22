@@ -11,6 +11,7 @@ use Thinktomorrow\Chief\Tests\Fakes\DetachedPageFake;
 use Thinktomorrow\Chief\Tests\Fakes\DetachedPageFakeTranslation;
 use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Illuminate\Support\Carbon;
 
 class HomepageTest extends TestCase
 {
@@ -29,7 +30,7 @@ class HomepageTest extends TestCase
     public function by_default_it_uses_first_published_single_page_as_the_homepage()
     {
         $article  = ArticlePageFake::create();
-        $product  = ProductPageFake::create(['published' => 1]);
+        $product  = ProductPageFake::create(['published_at' => Carbon::now()->subDay()]);
         $product2 = ProductPageFake::create();
 
         $this->assertEquals($product->id, Page::guessHomepage()->id);
@@ -39,7 +40,7 @@ class HomepageTest extends TestCase
     public function when_no_single_given_it_uses_first_published_page_as_the_homepage()
     {
         $article = ArticlePageFake::create();
-        $product = ProductPageFake::create(['published' => 1]);
+        $product = ProductPageFake::create(['published_at' => Carbon::now()->subDay()]);
 
         $this->assertEquals($product->id, Page::guessHomepage()->id);
     }
@@ -48,8 +49,8 @@ class HomepageTest extends TestCase
     public function it_guesses_the_homepage_if_explicitly_set_in_settings()
     {
         $article  = ArticlePageFake::create();
-        $product  = ProductPageFake::create(['published' => 1]);
-        $product2 = ProductPageFake::create(['published' => 1]);
+        $product  = ProductPageFake::create(['published_at' => Carbon::now()->subDay()]);
+        $product2 = ProductPageFake::create(['published_at' => Carbon::now()->subDay()]);
 
         $this->app['config']->set('thinktomorrow.chief-settings.homepage_id', $product2->id);
 

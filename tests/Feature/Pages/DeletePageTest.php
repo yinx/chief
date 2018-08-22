@@ -16,7 +16,7 @@ class DeletePageTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        $this->page = factory(Page::class)->create(['published' => false]);
+        $this->page = factory(Page::class)->create(['published_at' => null]);
     }
 
     /** @test */
