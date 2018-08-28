@@ -1,29 +1,12 @@
-@extends('chief::back._layouts.master')
+@extends(config('squanto.template','back._layouts.master'))
 
 @section('custom-styles')
-    <link rel="stylesheet" href="{{ asset('chief-assets/back/vendor/redactor/redactor.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/back/vendor/redactor/redactor.css') }}">
 @stop
-
-@push('custom-scripts')
-<script src="{{ asset('chief-assets/back/vendor/redactor/redactor.js') }}"></script>
-<script>
-    ;(function ($) {
-
-        $('.redactor-editor').redactor({
-            focus: false,
-            pastePlainText: true,
-            buttons: ['html', 'formatting', 'bold', 'italic',
-                'unorderedlist', 'orderedlist', 'outdent', 'indent',
-                'link', 'alignment','image','horizontalrule'],
-        });
-
-    })(jQuery);
-</script>
-@endpush
 
 @section('page-title','Edit line')
 
-@component('chief::back._layouts._partials.header')
+@component('back._layouts._partials.header')
     @slot('title', $line->label. ' bewerken')
 @endcomponent
 
@@ -113,7 +96,7 @@
                                     {{ $locale }} value
                                 </label>
                                 @if($line->editInEditor())
-                                    <textarea name="trans[{{ $locale }}]" id="{{ $locale }}-inputValue" class="redactor-editor" rows="5">{!! old('trans['.$locale.']',$line->getValue($locale,false)) !!}</textarea>
+                                    <textarea name="trans[{{ $locale }}]" id="{{ $locale }}-inputValue" data-editor rows="5">{!! old('trans['.$locale.']',$line->getValue($locale,false)) !!}</textarea>
                                 @elseif($line->editInTextarea())
                                     <textarea name="trans[{{ $locale }}]" id="{{ $locale }}-inputValue" class="" rows="5">{!! old('trans['.$locale.']',$line->getValue($locale,false)) !!}</textarea>
                                 @else
@@ -128,7 +111,7 @@
         </section>
 
         <div class="text-right inline-group-s">
-            <delete url="{{ route('squanto.lines.destroy',$line->id) }}" :modal="true" title="Vertaling permanent verwijderen">
+            <mkiha-delete url="{{ route('squanto.lines.destroy',$line->id) }}" :modal="true" title="Vertaling permanent verwijderen">
                 <span slot="modalBtn" class="btn btn-o-subtle">
                     <span class="icon icon-trash"></span>
                     Permanent verwijderen
@@ -136,7 +119,7 @@
                 <p slot="message">
                     Hou er rekening mee dat alle toegepaste vertalingen van de site zullen verdwijnen.
                 </p>
-            </delete>
+            </mkiha-delete>
             <button class="btn btn-success" type="submit"><i class="fa fa-check"></i> Bewaar aanpassingen</button>
         </div>
 
